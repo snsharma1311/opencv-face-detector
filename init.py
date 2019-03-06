@@ -1,24 +1,42 @@
+"""
+Filename: init.py
+Author: Shashank Sharma
+"""
 import cv2
 import numpy as np 
 
-### load caffe model
+"""
+Load pretrained deep learning model for face detection
+files are inside directory named 'model'
+deploy.prototxt.txt: it is a prototxt file containing deep learning architecture used
+res10_300x300_ssd_iter_140000.caffemodel: it is a caffemodel file containing the pre-trained weights
+"""
 model_prototxt = 'model/deploy.prototxt.txt'
 model_weights = 'model/res10_300x300_ssd_iter_140000.caffemodel' 
 model = cv2.dnn.readNetFromCaffe(model_prototxt, model_weights)
 
-### Initialize video stream
+"""
+Initailize videostream either from video file or from a webcam
+(comment the video source which is not required)
+In this we are taking video file from 'samples' folder
+"""
 #### 1. From video
 cap = cv2.VideoCapture('sample_video/sample.mp4')
 
-#### 2. From webcam
+#### 2. From webcam (comment previous line and uncomment below line if you are using webcam)
 #cap = cv2.VideoCapture(0)
 
-### Get video attributes
+"""
+Getting properties from video stream 
+"""
 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
 fps = cap.get(cv2.CAP_PROP_FPS)
 
-### Loop over frames
+"""
+Loop over frames and draw boxes over detected faces
+press 'q' to quit the application
+"""
 while(cap.isOpened()):
 	ret, frame = cap.read()
 	
